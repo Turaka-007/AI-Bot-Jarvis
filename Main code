@@ -1,8 +1,9 @@
 #GUI Window
 
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit, QWidget, QHBoxLayout, QVBoxLayout, QGridLayout
 from PyQt5.QtGui import QIcon
+import time
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -10,6 +11,53 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("J.A.R.V.I.S")
         self.setGeometry(700,300,500,500)
         self.setWindowIcon(QIcon("the-dark-knight-batman-logo-1od7bzojxu1h8dgg"))
+        self.button1 = QPushButton("Submit Name",self)
+        self.button2 = QPushButton("J.A.R.V.I.S",self)
+        self.label = QLabel("Hello ! Click button to speak to J.A.R.V.I.S",self)
+        self.line_edit = QLineEdit(self)
+        self.initUI()
+
+
+    def initUI(self):
+        self.line_edit.setGeometry(125,170,260,50) # name button
+        self.button1.setGeometry(125,230,260,50)
+        self.button1.clicked.connect(self.on_click_name_button)
+        text = self.line_edit.text()
+
+        self.button2.setGeometry(150, 200, 0, 0)  # button
+        self.button2.setObjectName("button2")
+
+        self.label.setGeometry(105, 300, 0, 0)  # text underneath button
+
+
+    def on_click_name_button(self):
+        self.line_edit.setGeometry(150, 170, 0, 0) # name button
+        self.button1.setGeometry(150, 190, 0, 0)
+        text = self.line_edit.text()
+
+        self.button2.setGeometry(150, 200, 200, 100)  # button
+        self.setStyleSheet("""
+            QPushButton#button2{
+                font-size: 30px;
+                border: 0.5px solid;
+                border-radius: 20px;
+                background-color: #00ff6e;}
+                
+            QPushButton#button2:hover{
+                font-size: 30px;
+                border: 0.5px solid;
+                border-radius: 20px;
+                background-color: #8efabd;}
+                """)
+        self.button2.clicked.connect(self.on_click_JARVIS_button)
+
+        self.label.setGeometry(105, 300, 600, 100)  # text underneath button
+        self.label.setText(f"Hello {text}! Click button to speak to J.A.R.V.I.S")
+
+    def on_click_JARVIS_button(self):
+        print("Accessing J.A.R.V.I.S") # text underneath button
+        self.label.setText("Accessing J.A.R.V.I.S")
+        self.label.setGeometry(172, 300, 300, 100)
 
 def main():
     app = QApplication(sys.argv)
